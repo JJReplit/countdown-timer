@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .countdown {
+            display: flex;
+            gap: 20px;
+        }
+        .time-block {
+            text-align: center;
+        }
+        .time {
+            background-color: #EDEDED;
+            color: #333;
+            font-size: 48px;
+            font-weight: bold;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .label {
+            color: #333;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown">
+        <div class="time-block">
+            <div id="days" class="time">0</div>
+            <div class="label">Days</div>
+        </div>
+        <div class="time-block">
+            <div id="hours" class="time">0</div>
+            <div class="label">Hours</div>
+        </div>
+        <div class="time-block">
+            <div id="minutes" class="time">0</div>
+            <div class="label">Minutes</div>
+        </div>
+        <div class="time-block">
+            <div id="seconds" class="time">0</div>
+            <div class="label">Seconds</div>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('September 1, 2024 10:00:00 EST').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (timeLeft < 0) {
+                clearInterval(countdownTimer);
+                document.querySelector('.countdown').innerHTML = 'Countdown expired!';
+            }
+        }
+
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call to avoid delay
+    </script>
+</body>
+</html>
